@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Comma to Line Converter</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<style>
+			html, body {
+				margin: 0; padding: 0; height: 100%;
+				font-family: Arial, sans-serif;
+				background: #f5f6fa;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+			}
+			.container {
+				background: #fff;
+				border-radius: 12px;
+				box-shadow: 0 4px 24px #2d69e022;
+				width: 95vw;
+				max-width: 95vw;
+				height: 90vh;
+				display: flex;
+				flex-direction: column;
+				padding: 20px;
+				box-sizing: border-box;
+			}
+			h2 {
+				margin: 0 0 12px 0;
+				text-align: center;
+				user-select: none;
+			}
+			textarea {
+				flex: 1 1 40%;
+				width: 100%;
+				font-size: 16px;
+				border-radius: 6px;
+				border: 1px solid #ddd;
+				padding: 8px;
+				resize: none;
+				box-sizing: border-box;
+				margin-bottom: 12px;
+				font-family: monospace;
+			}
+			button {
+				padding: 12px 0;
+				border-radius: 6px;
+				background: #28a745;
+				color: #fff;
+				border: none;
+				font-size: 18px;
+				font-weight: 600;
+				cursor: pointer;
+				margin-bottom: 12px;
+				user-select: none;
+				transition: background 0.2s;
+			}
+			button:hover {
+				background: #1e7e34;
+			}
+			pre {
+				flex: 1 1 50%;
+				background: #f3f6fa;
+				padding: 12px;
+				border-radius: 6px;
+				border: 1px solid #ddd;
+				white-space: pre-wrap;
+				word-break: break-word;
+				overflow-y: auto;
+				font-family: monospace;
+				margin: 0 0 12px 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Comma to Line Converter</h2>
+			<textarea id="input" placeholder="Enter comma-separated text here...">test,test,test,test</textarea>
+			<pre id="output"></pre>
+			<button id="copyBtn" onclick="copyOutput()">Copy Output</button>
+		</div>
+		
+		<script>
+			const input = document.getElementById('input');
+			const output = document.getElementById('output');
+			
+			function convert() {
+				const raw = input.value;
+				const lines = raw.split(',')
+				.map(s => s.trim())
+				.filter(s => s.length > 0)
+				.join('\n');
+				output.textContent = lines;
+			}
+			
+			function copyOutput() {
+				const outputText = output.textContent;
+				if (!outputText) {
+					alert('Nothing to copy!');
+					return;
+				}
+				navigator.clipboard.writeText(outputText).then(() => {
+					alert('Copied to clipboard!');
+				}, () => {
+					alert('Copy failed. Please copy manually.');
+				});
+			}
+			
+			input.addEventListener('input', convert);
+			window.onload = convert;
+		</script>
+	</body>
+</html>
